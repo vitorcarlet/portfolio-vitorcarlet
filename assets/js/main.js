@@ -140,4 +140,40 @@ const sr = ScrollReveal({
  sr.reveal(`.home__name, .home__info, 
             .about__container .section__title-1, .about__info, 
             .contact__social, .contact__data`, {origin: 'left'})
- sr.reveal(`.services__card, .projects__card`, {interval: 100})
+ sr.reveal(`.services__card, .projects__card, .about__content-skills`, {interval: 100})
+
+ /*=============== MODAL REVEAL ===============*/
+ function openModal(modalId) {
+    document.getElementById(`myModal${modalId}`).style.display = "flex";
+    showSlide(1, modalId);
+    document.body.style.overflow = "hidden"; // Impede a rolagem do body
+  }
+
+  function closeModal(modalId) {
+    document.getElementById(`myModal${modalId}`).style.display = "none";
+    document.body.style.overflow = "auto"; // Restaura a rolagem do body
+  }
+
+  function changeSlide(n, modalId) {
+    showSlide(slideIndex[modalId - 1] += n, modalId);
+  }
+
+  function showSlide(n, modalId) {
+    const slides = document.querySelectorAll(`#myModal${modalId} .carousel img`);
+    slideIndex[modalId - 1] = n;
+
+    if (n > slides.length) {
+      slideIndex[modalId - 1] = 1;
+    }
+    if (n < 1) {
+      slideIndex[modalId - 1] = slides.length;
+    }
+
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+
+    slides[slideIndex[modalId - 1] - 1].style.display = "block";
+  }
+
+  const slideIndex = [1, 1]; // Cada modal tem seu próprio índice de slide
